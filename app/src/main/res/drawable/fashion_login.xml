@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="100dp"
+    android:height="100dp"
+    android:viewportWidth="100"
+    android:viewportHeight="100">
+
+    <!-- Background Circle -->
+    <path
+        android:fillColor="#FF6B8E"
+        android:pathData="M50,50 m-50,0 a50,50 0 1,1 100,0 a50,50 0 1,1 -100,0"/>
+
+    <!-- User Silhouette -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M50,30 A20,20 0 1,1 50,70 A20,20 0 1,1 50,30 Z"/>
+
+    <!-- Body -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M30,75 L70,75 L65,95 L35,95 Z"/>
+
+    <!-- Keyhole (Login Symbol) -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M50,45 L50,60 M45,45 L55,45"/>
+
+</vector>

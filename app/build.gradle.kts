@@ -53,8 +53,17 @@ dependencies {
     implementation("androidx.compose.material3:material3")
     implementation("androidx.compose.material:material-icons-extended")
 
+    implementation("androidx.compose.material:material-icons-extended:1.5.4")
+
+    implementation("androidx.compose.material3:material3")
+    implementation("androidx.compose.material:material-icons-core")
+
     // Navigation
     implementation("androidx.navigation:navigation-compose:2.7.6")
+    implementation(libs.androidx.navigation.runtime.ktx)
+    implementation(libs.androidx.room.ktx)
+    implementation(libs.androidx.compose.animation.core.android)
+    implementation(libs.androidx.compose.animation.core.android)
 
     // Testing
     androidTestImplementation(platform("androidx.compose:compose-bom:2024.02.00"))

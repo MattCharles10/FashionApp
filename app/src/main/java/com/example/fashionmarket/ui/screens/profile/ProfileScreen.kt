@@ -1,309 +1,557 @@
+
 package com.example.fashionmarket.ui.screens.profile
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.Email
-import androidx.compose.material.icons.filled.ExitToApp
-import androidx.compose.material.icons.filled.History
-import androidx.compose.material.icons.filled.LocationOn
-import androidx.compose.material.icons.filled.Notifications
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Phone
-import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material.icons.filled.ShoppingBag
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Divider
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.ListItem
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import coil.compose.AsyncImage
+import com.example.fashionmarket.R
+import com.example.fashionmarket.ui.components.FloatingBottomBar
+import com.example.fashionmarket.viewmodel.UserViewModel
+import kotlinx.coroutines.launch
+import androidx.compose.foundation.lazy.items
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ProfileScreen(navController: NavController) {
+fun ProfileScreen(
+    navController: NavController,
+    userViewModel: UserViewModel = viewModel()
+) {
+    val currentUser by userViewModel.currentUser.collectAsState()
+    val cartItems by userViewModel.cartItems.collectAsState()
+    val favoriteProducts by userViewModel.favoriteProducts.collectAsState()
+    val orders = userViewModel.getUserOrders()
+    val scope = rememberCoroutineScope()
+
     Scaffold(
         topBar = {
-            TopAppBar(
+            CenterAlignedTopAppBar(
                 title = {
-                    Text("My Profile")
-                },
-                navigationIcon = {
-                    IconButton(onClick = { navController.popBackStack() }) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "Back")
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primary,
-                    titleContentColor = Color.White,
-                    navigationIconContentColor = Color.White
-                )
-            )
-        }
-    ) { paddingValues ->
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
-                .background(Color(0xFFF5F5F5))
-        ) {
-            // Profile Header
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
-                shape = RoundedCornerShape(16.dp),
-                elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
-            ) {
-                Column(
-                    modifier = Modifier.padding(20.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    // Profile Image
-                    Box(
-                        modifier = Modifier
-                            .size(100.dp)
-                            .clip(CircleShape)
-                            .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.2f)),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Person,
-                            contentDescription = "Profile",
-                            modifier = Modifier.size(50.dp),
-                            tint = MaterialTheme.colorScheme.primary
-                        )
-                    }
-
-                    Spacer(modifier = Modifier.height(16.dp))
-
                     Text(
-                        text = "Alex Johnson",
+                        text = "Profile",
                         style = MaterialTheme.typography.titleLarge,
                         fontWeight = FontWeight.Bold
                     )
-
-                    Text(
-                        text = "Premium Member",
-                        color = MaterialTheme.colorScheme.primary,
-                        fontSize = 14.sp
-                    )
-
-                    Spacer(modifier = Modifier.height(16.dp))
-
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceEvenly
-                    ) {
-                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                            Text(
-                                text = "12",
-                                style = MaterialTheme.typography.titleLarge,
-                                fontWeight = FontWeight.Bold
-                            )
-                            Text("Orders", color = Color.Gray, fontSize = 12.sp)
-                        }
-
-                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                            Text(
-                                text = "28",
-                                style = MaterialTheme.typography.titleLarge,
-                                fontWeight = FontWeight.Bold
-                            )
-                            Text("Wishlist", color = Color.Gray, fontSize = 12.sp)
-                        }
-
-                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                            Text(
-                                text = "4.8",
-                                style = MaterialTheme.typography.titleLarge,
-                                fontWeight = FontWeight.Bold
-                            )
-                            Text("Rating", color = Color.Gray, fontSize = 12.sp)
-                        }
-                    }
-
-                    Spacer(modifier = Modifier.height(16.dp))
-
-                    Button(
-                        onClick = { /* Edit profile */ },
-                        shape = RoundedCornerShape(12.dp),
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Icon(Icons.Default.Edit, contentDescription = "Edit", modifier = Modifier.size(16.dp))
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Text("Edit Profile")
-                    }
                 }
+            )
+        },
+        bottomBar = {
+            FloatingBottomBar(
+                navController = navController,
+                userViewModel = userViewModel
+            )
+        }
+    ) { paddingValues ->
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+        ) {
+            item {
+                ProfileHeader(currentUser = currentUser)
             }
 
-            // Account Settings
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp),
-                shape = RoundedCornerShape(16.dp),
-                elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
-            ) {
-                Column {
-                    ListItem(
-                        headlineContent = { Text("Personal Information") },
-                        leadingContent = {
-                            Icon(Icons.Default.Person, contentDescription = "Personal")
-                        },
-                        trailingContent = {
-                            Icon(Icons.Default.Edit, contentDescription = "Edit")
-                        },
-                        modifier = Modifier.clickable { /* Navigate to personal info */ }
-                    )
-
-                    Divider()
-
-                    ListItem(
-                        headlineContent = { Text("Order History") },
-                        leadingContent = {
-                            Icon(Icons.Default.History, contentDescription = "History")
-                        },
-                        trailingContent = {
-                            Box(
-                                modifier = Modifier
-                                    .clip(CircleShape)
-                                    .background(Color.Red)
-                                    .padding(horizontal = 8.dp, vertical = 4.dp)
-                            ) {
-                                Text("12", color = Color.White, fontSize = 12.sp)
-                            }
-                        },
-                        modifier = Modifier.clickable { /* Navigate to orders */ }
-                    )
-
-                    Divider()
-
-                    ListItem(
-                        headlineContent = { Text("Notifications") },
-                        leadingContent = {
-                            Icon(Icons.Default.Notifications, contentDescription = "Notifications")
-                        },
-                        trailingContent = {
-                            Icon(Icons.Default.Edit, contentDescription = "Edit")
-                        },
-                        modifier = Modifier.clickable { /* Navigate to notifications */ }
-                    )
-
-                    Divider()
-
-                    ListItem(
-                        headlineContent = { Text("Settings") },
-                        leadingContent = {
-                            Icon(Icons.Default.Settings, contentDescription = "Settings")
-                        },
-                        trailingContent = {
-                            Icon(Icons.Default.Edit, contentDescription = "Edit")
-                        },
-                        modifier = Modifier.clickable { /* Navigate to settings */ }
-                    )
-                }
-            }
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // Contact Information
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp),
-                shape = RoundedCornerShape(16.dp),
-                elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
-            ) {
-                Column {
-                    ListItem(
-                        headlineContent = { Text("Email") },
-                        supportingContent = { Text("alex.johnson@example.com") },
-                        leadingContent = {
-                            Icon(Icons.Default.Email, contentDescription = "Email")
-                        }
-                    )
-
-                    Divider()
-
-                    ListItem(
-                        headlineContent = { Text("Phone") },
-                        supportingContent = { Text("+1 (555) 123-4567") },
-                        leadingContent = {
-                            Icon(Icons.Default.Phone, contentDescription = "Phone")
-                        }
-                    )
-
-                    Divider()
-
-                    ListItem(
-                        headlineContent = { Text("Address") },
-                        supportingContent = { Text("123 Fashion St, New York, NY 10001") },
-                        leadingContent = {
-                            Icon(Icons.Default.LocationOn, contentDescription = "Address")
-                        }
-                    )
-                }
-            }
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // Logout Button
-            Button(
-                onClick = {
-                    // Logout logic
-                    navController.navigate("login") {
-                        popUpTo(0) { inclusive = true }
-                    }
-                },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
-                    .height(56.dp),
-                shape = RoundedCornerShape(12.dp),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.Red.copy(alpha = 0.1f),
-                    contentColor = Color.Red
+            item {
+                ProfileStats(
+                    ordersCount = orders.size,
+                    wishlistCount = favoriteProducts.size,
+                    cartCount = cartItems.sumOf { it.quantity }
                 )
-            ) {
-                Icon(Icons.Default.ExitToApp, contentDescription = "Logout")
-                Spacer(modifier = Modifier.width(8.dp))
-                Text("Logout")
             }
 
-            Spacer(modifier = Modifier.height(32.dp))
+            // Account Section
+            item {
+                Text(
+                    text = "Account",
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.SemiBold,
+                    modifier = Modifier.padding(start = 16.dp, top = 24.dp, bottom = 8.dp),
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+
+            items(accountMenuItems) { menuItem ->
+                ProfileMenuItem(
+                    icon = menuItem.icon,
+                    title = menuItem.title,
+                    description = menuItem.description,
+                    onClick = { menuItem.action(navController) }
+                )
+            }
+
+            // Shopping Section
+            item {
+                Text(
+                    text = "Shopping",
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.SemiBold,
+                    modifier = Modifier.padding(start = 16.dp, top = 24.dp, bottom = 8.dp),
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+
+            items(shoppingMenuItems) { menuItem ->
+                ProfileMenuItem(
+                    icon = menuItem.icon,
+                    title = menuItem.title,
+                    description = menuItem.description,
+                    onClick = { menuItem.action(navController) }
+                )
+            }
+
+            // Support Section
+            item {
+                Text(
+                    text = "Support",
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.SemiBold,
+                    modifier = Modifier.padding(start = 16.dp, top = 24.dp, bottom = 8.dp),
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+
+            items(supportMenuItems) { menuItem ->
+                ProfileMenuItem(
+                    icon = menuItem.icon,
+                    title = menuItem.title,
+                    description = menuItem.description,
+                    onClick = { menuItem.action(navController) }
+                )
+            }
+
+            item {
+                Spacer(modifier = Modifier.height(24.dp))
+
+                // Logout Button
+                OutlinedButton(
+                    onClick = {
+                        scope.launch {
+                            userViewModel.logout()
+                            navController.navigate("login") {
+                                popUpTo(0)
+                            }
+                        }
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp),
+                    shape = RoundedCornerShape(12.dp),
+                    colors = ButtonDefaults.outlinedButtonColors(
+                        contentColor = Color.Red
+                    )
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Logout,
+                        contentDescription = "Logout"
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(
+                        text = "Logout",
+                        style = MaterialTheme.typography.titleMedium
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(90.dp))
+            }
         }
     }
 }
+
+@Composable
+fun ProfileHeader(
+    currentUser: com.example.fashionmarket.data.model.User
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(MaterialTheme.colorScheme.primary)
+            .padding(24.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        if (currentUser.profileImage != null) {
+            AsyncImage(
+                model = currentUser.profileImage,
+                contentDescription = "Profile",
+                modifier = Modifier
+                    .size(120.dp)
+                    .clip(CircleShape)
+                    .background(Color.White),
+                contentScale = ContentScale.Crop
+            )
+        } else {
+            Image(
+                painter = painterResource(id = R.drawable.ic_profile_placeholder),
+                contentDescription = "Profile",
+                modifier = Modifier
+                    .size(120.dp)
+                    .clip(CircleShape)
+                    .background(Color.White)
+                    .padding(24.dp),
+                contentScale = ContentScale.Fit
+            )
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Text(
+            text = currentUser.fullName,
+            style = MaterialTheme.typography.headlineMedium,
+            color = Color.White,
+            fontWeight = FontWeight.Bold
+        )
+
+        Spacer(modifier = Modifier.height(4.dp))
+
+        Text(
+            text = currentUser.email,
+            style = MaterialTheme.typography.bodyMedium,
+            color = Color.White.copy(alpha = 0.8f)
+        )
+
+        Spacer(modifier = Modifier.height(4.dp))
+
+        Text(
+            text = "Member since ${currentUser.joinDate}",
+            style = MaterialTheme.typography.bodySmall,
+            color = Color.White.copy(alpha = 0.6f)
+        )
+    }
+}
+
+@Composable
+fun ProfileStats(
+    ordersCount: Int,
+    wishlistCount: Int,
+    cartCount: Int
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 24.dp, vertical = 20.dp),
+        horizontalArrangement = Arrangement.SpaceEvenly
+    ) {
+        ProfileStatItem(
+            count = ordersCount.toString(),
+            label = "Orders",
+            icon = Icons.Default.ShoppingBag
+        )
+        ProfileStatItem(
+            count = wishlistCount.toString(),
+            label = "Wishlist",
+            icon = Icons.Default.Favorite
+        )
+        ProfileStatItem(
+            count = cartCount.toString(),
+            label = "Cart",
+            icon = Icons.Default.ShoppingCart
+        )
+    }
+}
+
+@Composable
+fun ProfileStatItem(
+    count: String,
+    label: String,
+    icon: androidx.compose.ui.graphics.vector.ImageVector
+) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier.width(80.dp)
+    ) {
+        Box(
+            modifier = Modifier
+                .size(50.dp)
+                .clip(CircleShape)
+                .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.1f))
+                .padding(12.dp),
+            contentAlignment = Alignment.Center
+        ) {
+            Icon(
+                imageVector = icon,
+                contentDescription = label,
+                modifier = Modifier.size(24.dp),
+                tint = MaterialTheme.colorScheme.primary
+            )
+        }
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        Text(
+            text = count,
+            style = MaterialTheme.typography.headlineSmall,
+            color = MaterialTheme.colorScheme.primary,
+            fontWeight = FontWeight.Bold
+        )
+
+        Text(
+            text = label,
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.8f)
+        )
+    }
+}
+
+@Composable
+fun ProfileMenuItem(
+    icon: @Composable () -> Unit,
+    title: String,
+    description: String? = null,
+    onClick: () -> Unit
+) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp, vertical = 4.dp),
+        shape = RoundedCornerShape(12.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
+        onClick = onClick
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Box(
+                modifier = Modifier.size(28.dp)
+            ) {
+                icon()
+            }
+
+            Spacer(modifier = Modifier.width(16.dp))
+
+            Column(
+                modifier = Modifier.weight(1f)
+            ) {
+                Text(
+                    text = title,
+                    style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+
+                if (description != null) {
+                    Spacer(modifier = Modifier.height(2.dp))
+                    Text(
+                        text = description,
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+            }
+
+            Icon(
+                imageVector = Icons.Default.ChevronRight,
+                contentDescription = "Navigate",
+                tint = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
+    }
+}
+
+// Menu Item Data Classes
+data class ProfileMenuItemData(
+    val title: String,
+    val description: String? = null,
+    val icon: @Composable () -> Unit,
+    val action: (NavController) -> Unit = {}
+)
+
+// Account Menu Items (Using only default icons)
+val accountMenuItems = listOf(
+    ProfileMenuItemData(
+        title = "Personal Information",
+        description = "Update your name, email, and phone",
+        icon = {
+            Icon(
+                imageVector = Icons.Default.Person,
+                contentDescription = "Personal Info",
+                tint = MaterialTheme.colorScheme.primary
+            )
+        },
+        action = { navController -> navController.navigate("personal_info") }
+    ),
+    ProfileMenuItemData(
+        title = "Shipping Addresses",
+        description = "Manage your delivery addresses",
+        icon = {
+            Icon(
+                imageVector = Icons.Default.LocationOn,
+                contentDescription = "Addresses",
+                tint = MaterialTheme.colorScheme.primary
+            )
+        },
+        action = { navController -> navController.navigate("addresses") }
+    ),
+    ProfileMenuItemData(
+        title = "Payment Methods",
+        description = "Add or remove payment cards",
+        icon = {
+            Icon(
+                imageVector = Icons.Default.CreditCard,
+                contentDescription = "Payment",
+                tint = MaterialTheme.colorScheme.primary
+            )
+        },
+        action = { navController -> navController.navigate("payments") }
+    ),
+    ProfileMenuItemData(
+        title = "Change Password",
+        description = "Update your account password",
+        icon = {
+            Icon(
+                imageVector = Icons.Default.Lock,
+                contentDescription = "Password",
+                tint = MaterialTheme.colorScheme.primary
+            )
+        },
+        action = { navController -> navController.navigate("change_password") }
+    )
+)
+
+// Shopping Menu Items (Using only default icons)
+val shoppingMenuItems = listOf(
+    ProfileMenuItemData(
+        title = "My Orders",
+        description = "View and track your orders",
+        icon = {
+            Icon(
+                imageVector = Icons.Default.ShoppingBag,
+                contentDescription = "Orders",
+                tint = Color(0xFF4CAF50)
+            )
+        },
+        action = { navController -> navController.navigate("orders") }
+    ),
+    ProfileMenuItemData(
+        title = "Wishlist",
+        description = "Your saved favorite items",
+        icon = {
+            Icon(
+                imageVector = Icons.Default.Favorite,
+                contentDescription = "Wishlist",
+                tint = Color.Red
+            )
+        },
+        action = { navController -> navController.navigate("wishlist") }
+    ),
+    ProfileMenuItemData(
+        title = "Shopping Cart",
+        description = "Items ready for checkout",
+        icon = {
+            Icon(
+                imageVector = Icons.Default.ShoppingCart,
+                contentDescription = "Cart",
+                tint = MaterialTheme.colorScheme.primary
+            )
+        },
+        action = { navController -> navController.navigate("cart") }
+    ),
+    ProfileMenuItemData(
+        title = "Order History",
+        description = "View past purchases",
+        icon = {
+            Icon(
+                imageVector = Icons.Default.History,
+                contentDescription = "History",
+                tint = MaterialTheme.colorScheme.primary
+            )
+        },
+        action = { navController -> navController.navigate("order_history") }
+    ),
+    ProfileMenuItemData(
+        title = "Returns & Refunds",
+        description = "Manage returns and refunds",
+        icon = {
+            Icon(
+                imageVector = Icons.Default.Refresh, // Changed from AssignmentReturn
+                contentDescription = "Returns",
+                tint = MaterialTheme.colorScheme.primary
+            )
+        },
+        action = { navController -> navController.navigate("returns") }
+    )
+)
+
+// Support Menu Items (Using only default icons)
+val supportMenuItems = listOf(
+    ProfileMenuItemData(
+        title = "Help Center",
+        description = "Get help with your account",
+        icon = {
+            Icon(
+                imageVector = Icons.Default.Help,
+                contentDescription = "Help",
+                tint = MaterialTheme.colorScheme.primary
+            )
+        },
+        action = { navController -> navController.navigate("help") }
+    ),
+    ProfileMenuItemData(
+        title = "Contact Support",
+        description = "Chat or email our support team",
+        icon = {
+            Icon(
+                imageVector = Icons.Default.Email, // Changed from SupportAgent
+                contentDescription = "Support",
+                tint = MaterialTheme.colorScheme.primary
+            )
+        },
+        action = { navController -> navController.navigate("contact") }
+    ),
+    ProfileMenuItemData(
+        title = "FAQs",
+        description = "Frequently asked questions",
+        icon = {
+            Icon(
+                imageVector = Icons.Default.HelpOutline, // Changed from QuestionAnswer
+                contentDescription = "FAQs",
+                tint = MaterialTheme.colorScheme.primary
+            )
+        },
+        action = { navController -> navController.navigate("faqs") }
+    ),
+    ProfileMenuItemData(
+        title = "Settings",
+        description = "App preferences and notifications",
+        icon = {
+            Icon(
+                imageVector = Icons.Default.Settings,
+                contentDescription = "Settings",
+                tint = MaterialTheme.colorScheme.primary
+            )
+        },
+        action = { navController -> navController.navigate("settings") }
+    ),
+    ProfileMenuItemData(
+        title = "About App",
+        description = "Version 1.0.0 • Fashion Market",
+        icon = {
+            Icon(
+                imageVector = Icons.Default.Info,
+                contentDescription = "About",
+                tint = MaterialTheme.colorScheme.primary
+            )
+        },
+        action = { navController -> navController.navigate("about") }
+    )
+)
