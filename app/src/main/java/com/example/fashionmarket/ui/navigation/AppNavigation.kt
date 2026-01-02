@@ -1,3 +1,4 @@
+
 package com.example.fashionmarket.ui.navigation
 
 import androidx.compose.runtime.Composable
@@ -43,7 +44,7 @@ fun AppNavigation() {
         }
 
         composable(Screen.Home.route) {
-            MainApp()
+            HomeScreen(navController = navController)
         }
     }
 }
