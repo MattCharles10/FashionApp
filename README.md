@@ -2,6 +2,9 @@
 <p align="center"> <img src="https://img.shields.io/badge/Kotlin-7F52FF?style=for-the-badge&logo=kotlin&logoColor=white" alt="Kotlin"> <img src="https://img.shields.io/badge/Jetpack%20Compose-4285F4?style=for-the-badge&logo=jetpackcompose&logoColor=white" alt="Jetpack Compose"> <img src="https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white" alt="Android"> <img src="https://img.shields.io/badge/Material%20Design%203-757575?style=for-the-badge&logo=material-design&logoColor=white" alt="Material Design 3"> </p>
 A modern e-commerce fashion marketplace built with Jetpack Compose for Android. This app provides a seamless shopping experience with a beautiful Material Design 3 interface.
 
+
+
+
 📱 Screenshots
 
 <img width="374" height="808" alt="Screenshot 2026-01-03 002223" src="https://github.com/user-attachments/assets/fb7d8a21-f83a-469a-84bd-a0da983b8634" />
@@ -11,7 +14,11 @@ A modern e-commerce fashion marketplace built with Jetpack Compose for Android. 
 <img width="372" height="775" alt="Screenshot 2026-01-03 002408" src="https://github.com/user-attachments/assets/d5e280be-0676-4ceb-bf6c-3aa8b30e4345" />
 <img width="385" height="814" alt="Screenshot 2026-01-03 152341" src="https://github.com/user-attachments/assets/584b38e6-a82b-4f7f-9e9c-093e891f3fd4" />
 
+
+
+
 ✨ Features
+
 🎨 Modern UI - Built with Material Design 3 and Jetpack Compose
 
 🔐 User Authentication - Login and registration screens
@@ -28,7 +35,11 @@ A modern e-commerce fashion marketplace built with Jetpack Compose for Android. 
 
 📱 Responsive Design - Works on all screen sizes
 
+
+
 🏗️ Fashion Market App Structure
+
+
 Root: com.example.fashionmarket
 
 📊 Data Layer - Handles data/models
