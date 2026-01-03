@@ -129,7 +129,8 @@ Installation
 Clone the repository
 
 bash
-git clone https://github.com/yourusername/fashion-market-app.git
+git clone https://github.com/MattCharles10/FashionApp.git
+
 Open the project in Android Studio
 
 Sync Gradle files
