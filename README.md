@@ -28,41 +28,52 @@ A modern e-commerce fashion marketplace built with Jetpack Compose for Android. 
 
 📱 Responsive Design - Works on all screen sizes
 
-🏗️ Architecture
-text
-com.example.fashionmarket/
-├── MainActivity.kt
-├── data/
-│   ├── model/
-│   │   ├── Product.kt
-│   │   ├── User.kt
-│   │   └── CartItem.kt
-│   ├── repository/
-│   └── database/
-├── ui/
-│   ├── screens/
-│   │   ├── splash/
-│   │   │   └── SplashScreen.kt
-│   │   ├── auth/
-│   │   │   ├── LoginScreen.kt
-│   │   │   └── RegisterScreen.kt
-│   │   ├── home/
-│   │   │   ├── HomeScreen.kt
-│   │   │   ├── components/
-│   │   │   └── viewmodel/
-│   │   ├── products/
-│   │   ├── cart/
-│   │   └── profile/
-│   ├── components/
-│   ├── navigation/
-│   │   └── AppNavigation.kt
-│   └── theme/
-│       └── Theme.kt
-├── viewmodel/
-└── utils/
+🏗️ Fashion Market App Structure
+Root: com.example.fashionmarket
+
+📊 Data Layer - Handles data/models
+
+model/ → Product.kt, User.kt, CartItem.kt (data structures)
+
+repository/ → Data operations center
+
+database/ → Local storage (Room DB)
+
+🎨 UI Layer - All screens/components
+
+screens/ → App screens:
+
+splash/ → Welcome screen
+
+auth/ → Login/Register screens
+
+home/ → Main home with components
+
+products/ → Product listings
+
+cart/ → Shopping cart
+
+profile/ → User profile
+
+components/ → Reusable UI pieces
+
+navigation/ → AppNavigation.kt (screen routing)
+
+theme/ → Theme.kt (app styling)
+
+⚡ ViewModel Layer - Business logic/state management
+
+Handles data between UI and Data layers
+
+🛠️ Utils - Helper functions/utilities
+
+Clean MVVM architecture with clear separation between data, business logic, and UI.
+
+
 
 
 🛠️ Tech Stack
+
 Kotlin - Primary programming language
 
 Jetpack Compose - Modern declarative UI toolkit
